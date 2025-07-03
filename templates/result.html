@@ -1,1 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Plan</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="result-page">
+  <div class="card">
+    <h1>Here's your plan, <span class="highlight">{{ name.upper() }}</span>!</h1>
 
+    <ul class="schedule-list">
+      {% for item in schedule %}
+        <li><strong>{{ item[0] }}:</strong> {{ item[1] }}</li>
+      {% endfor %}
+    </ul>
+
+    <p class="mood-msg">{{ mood_msg }}</p>
+    <p class="quote"><em>Motivational Quote:</em> {{ quote }}</p>
+
+    <a href="/" class="btn-back">⟵ Plan another day</a>
+  </div>
+</body>
+</html>
