@@ -1,1 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Plan Your Day</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="form-page">
+  <div class="container">
+    <h1>Plan your day <span class="highlight">with My Day</span></h1>
+    <p class="subtitle">Your desi-style private daily planner to manage work and life</p>
 
+    <form method="POST">
+      <label>Name:</label>
+      <input name="name" required>
+
+      <label>Mood:</label>
+      <select name="mood">
+        <option value="productive">Productive</option>
+        <option value="lazy">Lazy</option>
+      </select>
+
+      <label>How many meetings?</label>
+      <input type="number" id="meetings" name="meetings" min="0" onchange="addMeetingFields()" required>
+
+      <div id="meeting-fields"></div>
+
+      <label>Lunch time:</label>
+      <input name="lunch" required>
+
+      <label>Do you plan to exercise?</label>
+      <div class="radio-group">
+        <label><input type="radio" name="exercise" value="yes" onchange="toggleExerciseField()"> Yes</label>
+        <label><input type="radio" name="exercise" value="no" onchange="toggleExerciseField()"> No</label>
+      </div>
+
+      <div id="exercise-time-field" style="display: none;">
+        <label>Exercise time:</label>
+        <input name="exercise_time" placeholder="e.g. 18:00">
+      </div>
+
+      <label>Sleep time:</label>
+      <input name="sleep" required>
+
+      <button type="submit">Get My Plan</button>
+    </form>
+  </div>
+
+  <script>
+    function addMeetingFields() {
+      const count = parseInt(document.getElementById("meetings").value) || 0;
+      const container = document.getElementById("meeting-fields");
+      container.innerHTML = '';
+      for (let i = 1; i <= count; i++) {
+        container.innerHTML += `
+          <label>Meeting ${i} Start Time: <input name="meeting_start_${i}" required></label>
+          <label>Meeting ${i} End Time: <input name="meeting_end_${i}" required></label>
+        `;
+      }
+    }
+
+    function toggleExerciseField() {
+      const val = document.querySelector('input[name="exercise"]:checked').value;
+      document.getElementById("exercise-time-field").style.display = val === 'yes' ? 'block' : 'none';
+    }
+  </script>
+</body>
+</html>
